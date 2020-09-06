@@ -8,9 +8,8 @@ class Post:
         self.tags = tags
         self.preview_text = preview_text
 
-    def show_info(self):
-        return f"{self.post_id=}\n{self.author=}\n{self.post_time=}\n{self.title=}\n{self.tags=}\n\n" \
-               f"Превью текста статьи - \n\n{self.preview_text}"
+    def to_str(self):
+        return f"Автор статьи - {self.author}\nНазвание статьи - {self.title}\n\n{self.preview_text}"
 
     @classmethod
     def from_bs_tag(cls, tag_object):
