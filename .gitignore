@@ -1,4 +1,4 @@
 /.idea
-config.py
-subscribers.txt
+/config.py
+/subscribers.txt
 /__pycache__

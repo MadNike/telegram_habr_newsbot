@@ -1,7 +1,6 @@
 from config import API_KEY
-from habr_parser import HabrParser
+from listener import Listener
 import telebot
-from concurrent.futures import ThreadPoolExecutor
 
 
 
@@ -9,7 +8,7 @@ class Bot:
 
     def __init__(self):
         self.api = telebot.TeleBot(API_KEY)
-        self.parser = HabrParser()
+        self.listner = Listener()
 
         # Пока что айди подиписанных пользователей хранятся в текстовом файле
 
@@ -23,12 +22,20 @@ class Bot:
                     else:
                         self.api.send_message(message.from_user.id, "You are already subscribed!")
 
+
+        self.distribution()
         self.api.polling()
 
 
-    def send_last_post(self, user_id):
-        self.api.send_message(user_id, self.parser.last_post.to_str())
+    def distribution(self):
+        with open('subscribers.txt', 'r')  as f:
+            for user in f.readlines():
+                if user.strip():
+                    for post in self.listner.listen():
+                        self.api.send_message(user, post.to_str())
 
 
 
-# bot = Bot()
+
+
+bot = Bot()
