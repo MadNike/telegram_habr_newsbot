@@ -6,6 +6,7 @@ import telebot
 
 class Bot:
 
+
     def __init__(self):
         self.api = telebot.TeleBot(API_KEY)
         self.listner = Listener()
@@ -23,10 +24,6 @@ class Bot:
                         self.api.send_message(message.from_user.id, "You are already subscribed!")
 
 
-        self.distribution()
-        self.api.polling()
-
-
     def distribution(self):
         with open('subscribers.txt', 'r')  as f:
             for user in f.readlines():
@@ -35,7 +32,6 @@ class Bot:
                         self.api.send_message(user, post.to_str())
 
 
-
-
-
-bot = Bot()
+    def start(self):
+        self.distribution()
+        self.api.polling()
