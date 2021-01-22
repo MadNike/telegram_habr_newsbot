@@ -22,7 +22,7 @@ class Bot:
                 with open('subscribers.txt', 'r') as read_file:  # Пока что айди подиписанных пользователей хранятся в текстовом файле
                     if str(message.from_user.id) not in read_file.readlines():
                         with open('subscribers.txt', 'a') as write_file:
-                            write_file.write('\n' + str(message.from_user.id))
+                            write_file.write(str(message.from_user.id) + "\n")
                     else:
                         self.api.send_message(message.from_user.id, "You are already subscribed!")
 
@@ -48,7 +48,9 @@ class Bot:
     def send_post(self):
         for post in self.listen():
             with open('subscribers.txt', 'r')  as f:
-                self.api.send_message(int(f.read()), post.to_str())
+                for id in f.readlines():
+                    if id != "\n":
+                        self.api.send_message(int(id), post.to_str())
 
 
     # def distribution(self):
