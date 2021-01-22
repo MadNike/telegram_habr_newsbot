@@ -20,7 +20,7 @@ class Bot:
         def add_subscriber(message):
             if message.text == "/subscribe":
                 with open('subscribers.txt', 'r') as read_file:  # Пока что айди подиписанных пользователей хранятся в текстовом файле
-                    if str(message.from_user.id) not in read_file.readlines():
+                    if str(message.from_user.id) not in read_file.read().splitlines():
                         with open('subscribers.txt', 'a') as write_file:
                             write_file.write(str(message.from_user.id) + "\n")
                     else:
